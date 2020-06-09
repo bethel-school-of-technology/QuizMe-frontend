@@ -3,6 +3,7 @@
     align-items: center;
     flex-direction: column;
     padding: 20px;
+    word-wrap: break-word;
 }
 #quiz progress {
     margin-bottom: 20px;
