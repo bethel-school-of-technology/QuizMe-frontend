@@ -41,6 +41,7 @@ class Quiz extends React.Component {
     }    
     getQuestion(exec) {
         return $.get(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1&category=${this.props.category}`, data => {
+            if(data.response_code !== 0) {this.setState({gameOver: true}); return} 
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
             var answers = [...incorrectAnswers, correctAnswer].sort(() => {return 0.5 - Math.random()});
@@ -68,7 +69,7 @@ class Quiz extends React.Component {
     }
     async startTimer() {
         var countdown = setInterval(() => {this.setState({timerValue: this.state.timerValue-1})}, 1000)
-        setInterval(() => {if(this.state.timerValue === 0) {
+        setInterval(() => {if(this.state.timerValue === 0 || this.state.gameOver) {
             this.setState({gameOver: true});
             clearInterval(countdown);
         }})
