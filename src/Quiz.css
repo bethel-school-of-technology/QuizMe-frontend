@@ -1,0 +1,21 @@
+#Quiz {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #00FFFF33 !important;
+}
+#quiz progress {
+    margin-bottom: 20px;
+}
+#question {
+    width: 70vw;
+}
+#answers {
+    margin: 20px 0;
+    width: 70vw;
+}
+#answers * {
+    width: 50%;
+    margin: 10px auto;
+}
