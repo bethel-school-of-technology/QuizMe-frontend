@@ -31,7 +31,7 @@ class Quiz extends React.Component {
                 <div id="answers">
                     {answers}
                 </div>
-                <progress className="nes-progress is-primary" value={this.state.timerValue} max={this.timerMax}></progress>
+                <progress id="timer" className="nes-progress is-primary" value={this.state.timerValue} max={this.timerMax}></progress>
             </div>
         )
     }
@@ -55,12 +55,16 @@ class Quiz extends React.Component {
     }
     nextQuestion(index) {
         if(this.state.gameOver) return;
-        if(index===this.state.correctAnswer) {
+        var correct = index===this.state.correctAnswer;
+        if(correct) {
             this.setState({timerValue: this.state.timerValue > this.timerMax-5 ? this.timerMax : this.state.timerValue + this.timeBonus})
             this.correctAnswers++;
         }
         this.getQuestion(() => this.question++);
-        
+        document.getElementById('timer').classList.replace('is-primary', correct ? 'is-success' : 'is-error');
+        setTimeout(() => {
+            document.getElementById('timer').classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
+        }, 200)
     }
     htmlDecode(input){
         var e = document.createElement('div');
