@@ -1,6 +1,8 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import logo from './logo.svg';
 import './App.css';
+import Home from "./Home";
 
 function App() {
   return (
@@ -22,5 +24,11 @@ function App() {
     </div>
   );
 }
+
+ReactDOM.render(
+  <Home/>, 
+  document.getElementById("root")
+);
+
 
 export default App;
