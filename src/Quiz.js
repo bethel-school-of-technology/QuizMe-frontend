@@ -3,7 +3,8 @@ import './Quiz.css';
 var $ = require('jquery');
 
 class Quiz extends React.Component {
-    state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: 60, gameOver: false};
+    timerMax = 60;
+    state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false};
     question = 1;
     correctAnswers = 0;
     sessionToken;
@@ -30,7 +31,7 @@ class Quiz extends React.Component {
                 <div id="answers">
                     {answers}
                 </div>
-                <progress className="nes-progress is-primary" value={this.state.timerValue} max="60"></progress>
+                <progress className="nes-progress is-primary" value={this.state.timerValue} max={this.timerMax}></progress>
             </div>
         )
     }
