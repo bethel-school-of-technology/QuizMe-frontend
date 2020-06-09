@@ -56,7 +56,7 @@ class Quiz extends React.Component {
     nextQuestion(index) {
         if(this.state.gameOver) return;
         if(index===this.state.correctAnswer) {
-            this.setState({timerValue: this.state.timerValue > 55 ? 60 : this.state.timerValue + this.timeBonus})
+            this.setState({timerValue: this.state.timerValue > this.timerMax-5 ? this.timerMax : this.state.timerValue + this.timeBonus})
             this.correctAnswers++;
         }
         this.getQuestion(() => this.question++);
