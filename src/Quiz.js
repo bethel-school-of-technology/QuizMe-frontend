@@ -3,8 +3,9 @@ import './Quiz.css';
 var $ = require('jquery');
 
 class Quiz extends React.Component {
-    state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: 60};
+    state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: 60, gameOver: false};
     question = 1;
+    correctAnswers = 0;
     sessionToken;
     timeBonus = 5;
     constructor() {
@@ -15,6 +16,11 @@ class Quiz extends React.Component {
     render() {
         var answers = [];
         this.state.answers.forEach((answer, index) => answers.push(<div key={index} className="nes-btn is-primary answer" onClick={() => this.nextQuestion(index)}>{answer}</div>))
+        if(this.state.gameOver) {
+            return(
+                <div style={{textAlign: "center"}}>Game Over<br/>Your score:<br/>{this.correctAnswers} out of {this.question}</div>
+            )
+        } else
         return (
             <div id='Quiz' className="nes-container is-dark">
                 <div id="question" className="nes-container is-dark with-title">
@@ -33,7 +39,7 @@ class Quiz extends React.Component {
         .then(() => {this.getQuestion().then(() => this.startTimer())});
     }    
     getQuestion(exec) {
-        return $.get(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1&category=${this.props.category}&type=multiple`, data => {
+        return $.get(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1&category=${this.props.category}`, data => {
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
             var answers = [...incorrectAnswers, correctAnswer].sort(() => {return 0.5 - Math.random()});
@@ -46,7 +52,11 @@ class Quiz extends React.Component {
         })
     }
     nextQuestion(index) {
-        if(index===this.state.correctAnswer) this.setState({timerValue: this.state.timerValue > 55 ? 60 : this.state.timerValue + this.timeBonus})
+        if(this.state.gameOver) return;
+        if(index===this.state.correctAnswer) {
+            this.setState({timerValue: this.state.timerValue > 55 ? 60 : this.state.timerValue + this.timeBonus})
+            this.correctAnswers++;
+        }
         this.getQuestion(() => this.question++);
         
     }
@@ -56,7 +66,11 @@ class Quiz extends React.Component {
         return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
     }
     async startTimer() {
-        setInterval(() => {this.setState({timerValue: this.state.timerValue-1})}, 1000)
+        var countdown = setInterval(() => {this.setState({timerValue: this.state.timerValue-1})}, 1000)
+        setInterval(() => {if(this.state.timerValue === 0) {
+            this.setState({gameOver: true});
+            clearInterval(countdown);
+        }})
     }
 }
 
