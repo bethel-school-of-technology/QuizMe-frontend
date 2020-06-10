@@ -9,7 +9,7 @@ class Quiz extends React.Component {
     correctAnswers = 0;
     sessionToken;
     timeBonus = 5;
-    timePenalty = 2;
+    timePenalty = 3;
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
