@@ -9,6 +9,7 @@ class Quiz extends React.Component {
     correctAnswers = 0;
     sessionToken;
     timeBonus = 5;
+    timePenalty = 2;
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
@@ -59,7 +60,7 @@ class Quiz extends React.Component {
         if(correct) {
             this.setState({timerValue: this.state.timerValue > this.timerMax-5 ? this.timerMax : this.state.timerValue + this.timeBonus})
             this.correctAnswers++;
-        }
+        } else this.setState({timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0})
         this.getQuestion(() => this.question++);
         var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
