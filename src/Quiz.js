@@ -61,16 +61,16 @@ class Quiz extends React.Component {
             this.correctAnswers++;
         }
         this.getQuestion(() => this.question++);
-
-        document.getElementById('timer').classList.replace('is-primary', correct ? 'is-success' : 'is-error');
+        var timer = document.getElementById('timer');
+        timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         setTimeout(() => {
-            document.getElementById('timer').classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
+            timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
         }, 200)
         setTimeout(() => {
-            document.getElementById('timer').classList.replace('is-primary', correct ? 'is-success' : 'is-error');
+            timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         }, 400)
         setTimeout(() => {
-            document.getElementById('timer').classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
+            timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
         }, 600)
     }
     htmlDecode(input){
