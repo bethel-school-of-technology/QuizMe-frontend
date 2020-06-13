@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import logo from './logo.svg';
+import Quiz from './Quiz';
 import './App.css';
 import Home from "./Home";
 
 function App() {
   return (
-    <div className="App" style={{height: "100%"}}>
+    <div id="App">
       <Home/>
     </div>
   );
