@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
  
 class Home extends Component {
   render() {
@@ -10,8 +11,8 @@ class Home extends Component {
           }}>
               <h1>QuizMe</h1>
               <h2>Funny Phrase</h2>
-              <input type="button" value="Play" class="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px" }} />
-              <input type="button" value="Score" class="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px" }} />
+              <Link to="/SelectCategory" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Play</Link>
+              <Link to="/Scores" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Scores</Link>
           </div>
       );
   }

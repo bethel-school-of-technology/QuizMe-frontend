@@ -2,6 +2,7 @@ import React from 'react';
 import './Quiz.css';
 var $ = require('jquery');
 
+
 class Quiz extends React.Component {
     timerMax = 60;
     state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false};
@@ -17,12 +18,14 @@ class Quiz extends React.Component {
     }
     render() {
         var answers = [];
-        this.state.answers.forEach((answer, index) => answers.push(<div key={index} className="nes-btn is-primary answer" onClick={() => this.nextQuestion(index)}>{answer}</div>))
+        this.state.answers.forEach((answer, index) => 
+            answers.push(<div key={index} className="nes-btn is-primary answer"
+                            onClick={() => this.nextQuestion(index)}>{answer}</div>))
         if(this.state.gameOver) {
             return(
                 <div style={{textAlign: "center"}}>Game Over<br/>Your score:<br/>{this.correctAnswers} out of {this.question}</div>
             )
-        } else
+        }
         return (
             <div id='Quiz' className="nes-container is-dark">
                 <div id="question" className="nes-container is-dark with-title">
@@ -37,11 +40,11 @@ class Quiz extends React.Component {
         )
     }
     componentDidMount() {
-        $.get("https://opentdb.com/api_token.php?command=request", data => this.sessionToken = data.token)
+        $.get("https://opentdb.com/api_token.php?command=request", data => {this.sessionToken = data.token})
         .then(() => {this.getQuestion().then(() => this.startTimer())});
     }    
-    getQuestion(exec) {
-        return $.get(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1&category=${this.props.category}`, data => {
+    getQuestion() {
+        return $.get(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1&category=${this.props.match.params.category}`, data => {
             if(data.response_code !== 0) {this.setState({gameOver: true}); return} 
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
@@ -50,7 +53,6 @@ class Quiz extends React.Component {
                 answers[index] = this.htmlDecode(answers[index]);
                 correctAnswer = (correctAnswer === element) ? index : correctAnswer;
             });
-            if(typeof(exec) === "function") {exec()}
             this.setState({questionText: this.htmlDecode(data.results[0].question), answers: answers, correctAnswer: correctAnswer})
         })
     }
@@ -61,7 +63,7 @@ class Quiz extends React.Component {
             this.setState({timerValue: this.state.timerValue > this.timerMax-5 ? this.timerMax : this.state.timerValue + this.timeBonus})
             this.correctAnswers++;
         } else this.setState({timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0})
-        this.getQuestion(() => this.question++);
+        this.getQuestion().then(this.question++);
         var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         setTimeout(() => {
