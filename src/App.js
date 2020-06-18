@@ -11,6 +11,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" component={Home} exact/>
+          <Route path="/" component={Scores} exact/>
           <Route path="/SelectCategory" component={SelectCategory}/>
           <Route path="/Quiz/:category" render={(props) => {
             return <Quiz {...props}/>
