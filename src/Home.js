@@ -13,6 +13,8 @@ class Home extends Component {
               <h2>Funny Phrase</h2>
               <Link to="/SelectCategory" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Play</Link>
               <Link to="/Scores" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Scores</Link>
+              <Link to="/Login" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Login</Link>
+
           </div>
       );
   }
