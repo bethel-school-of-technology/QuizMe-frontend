@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from "react";
 import './Quiz.css';
 var $ = require('jquery');
 
 
-class Quiz extends React.Component {
+class Quiz extends Component {
     timerMax = 60;
     state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false};
     question = 1;
