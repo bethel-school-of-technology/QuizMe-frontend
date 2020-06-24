@@ -10,9 +10,8 @@ class Highscores extends Component {
     };
 
     fetchScoreData = () => {
-        return $.get("localhost:2020/highscores", data => {
-            
-        }).then(response => {
+        return $.get("localhost:2020/highscores")
+        .then(response => {
             this.setState(() => {
                 return {
                     scoreData: response.data
