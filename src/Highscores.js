@@ -5,20 +5,26 @@ import { Link } from 'react-router-dom';
 var $ = require('jquery');
 
 class Highscores extends Component {
-    state = {
-        scoreData: []
-    };
+    
+    constructor() {
+        super();
+        this.state = {
+            scoreData: {}
+            
+        };
+        this.fetchScoreData = this.fetchScoreData.bind(this);
+    }
 
     fetchScoreData = () => {
-        return $.get("localhost:2020/highscores")
-        .then(response => {
-            this.setState(() => {
-                return {
-                    scoreData: response.data
+        return $.get("http://localhost:2020/highscores", response => {
+            this.setState(
+                {
+                    scoreData: JSON.parse(response.data)
                 }
-            })
+            )
         })
     };
+
     componentDidMount() {
         this.fetchScoreData();
     };
