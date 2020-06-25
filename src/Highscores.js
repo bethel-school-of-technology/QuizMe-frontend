@@ -37,38 +37,38 @@ class Highscores extends Component {
             return <div>Failed to fetch data from server</div>;
         }
 
-        const scoreBoardView = this.state.scoreData.map(highscores => (
-            <div>
-                <div style={{
-                    width: "100%", height: "100%",
-                    margin: "0 auto", display: "flex",
-                    alignItems: "center", justifyContent: "center"
-                }}>
-                    <h1>High Scores</h1>
-                </div>
-                <br/>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                        <tr key={highscores.id}> 
-                            <td>{highscores.playername}</td>
-                            <td>{highscores.highscore}</td>
-                        </tr>
-                    </table>
-                </div>
-                <br/>
-                <br/>
-                <footer>
-                    <Link to="/" className="nes-btn is-primary" style={{ width: "60%", height: "50px", margin: "10px", textAlign: "center" }}>Home</Link>
-                    <Link to="/SelectCategory" className="nes-btn is-secondary" style={{ width: "60%", height: "50px", margin: "10px", textAlign: "center" }}>Play Again!</Link>
-                </footer>
-            </div>
+        const scoreBoardView = this.state.scoreData.map((highscores, index) => (
+            <tr key={index}> 
+                    <td>{highscores.playername}</td>
+                    <td style={{textAlign: "right"}}>{highscores.highscore}</td>
+                </tr>
         ));
         
-        return <div>{scoreBoardView}</div>
+        return <div style={{
+            width: "100%", height: "100%",
+            margin: "0 auto", display: "flex",
+            alignItems: "center", justifyContent: "center", flexDirection: "column"
+        }}>
+        <div>
+            <h1>High Scores</h1>
+        </div>
+        <br/>
+        <div>
+            <table>
+                <tr>
+                    <th style={{color: "red"}}>Name</th>
+                    <th style={{color: "red"}}>Score</th>
+                </tr>
+                {scoreBoardView}
+            </table>
+        </div>
+        <br/>
+        <br/>
+        <footer style={{position: "fixed", bottom: "20px"}}>
+            <Link to="/" className="nes-btn is-primary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Home</Link>
+            <Link to="/SelectCategory" className="nes-btn is-secondary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Play Again!</Link>
+        </footer>
+    </div>
     }
 }
 
