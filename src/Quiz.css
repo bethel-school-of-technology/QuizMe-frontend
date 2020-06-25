@@ -4,18 +4,19 @@
     flex-direction: column;
     padding: 20px;
     word-wrap: break-word;
-}
-#quiz progress {
-    margin-bottom: 20px;
+    width: 150%;
 }
 #question {
-    width: 70vw;
+    width: 100%;
 }
 #answers {
     margin: 20px 0;
-    width: 70vw;
+    width: 100%;
 }
 #answers * {
     width: 50%;
     margin: 10px auto;
+}
+#quiz progress {
+    margin-bottom: 20px;
 }

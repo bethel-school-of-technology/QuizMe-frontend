@@ -3,7 +3,7 @@ import './SelectCategory.css'
 import {Link} from 'react-router-dom';
 
 class SelectCategory extends React.Component {
-    state = {category: "any"}
+    state = {category: ""}
     setCategory(e) {
         this.setState({category: e.target.options[e.target.selectedIndex].value})
     }
@@ -17,7 +17,7 @@ class SelectCategory extends React.Component {
                 <h1>Categories</h1>
                 <div className="nes-select">
                     <select id="category" onChange={this.setCategory}>
-                        <option value="any">Any Category</option>
+                        <option>Any Category</option>
                         <option value="9">General Knowledge</option>
                         <option value="10">Entertainment: Books</option>
                         <option value="11">Entertainment: Film</option>
