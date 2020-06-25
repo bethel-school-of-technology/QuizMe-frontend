@@ -9,17 +9,17 @@ class Highscores extends Component {
     constructor() {
         super();
         this.state = {
-            scoreData: {}
-            
+            scoreData: []
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
     }
 
     fetchScoreData = () => {
         return $.get("http://localhost:2020/highscores", response => {
+            console.log (response);
             this.setState(
                 {
-                    scoreData: JSON.parse(response.data)
+                    scoreData: response
                 }
             )
         })
@@ -27,11 +27,13 @@ class Highscores extends Component {
 
     componentDidMount() {
         this.fetchScoreData();
+        console.log(this.fetchScoreData());
     };
 
     render() {
+
         console.log(this.state.scoreData);
-        if (this.state.scoreData.length === 0) {
+        if (this.state.scoreData === null) {
             return <div>Failed to fetch data from server</div>;
         }
 
@@ -44,6 +46,7 @@ class Highscores extends Component {
                 }}>
                     <h1>High Scores</h1>
                 </div>
+                <br/>
                 <div>
                     <table>
                         <tr>
@@ -56,24 +59,16 @@ class Highscores extends Component {
                         </tr>
                     </table>
                 </div>
+                <br/>
+                <br/>
                 <footer>
-                    <Link to="/Home" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Home</Link>
+                    <Link to="/" className="nes-btn is-primary" style={{ width: "60%", height: "50px", margin: "10px", textAlign: "center" }}>Home</Link>
+                    <Link to="/SelectCategory" className="nes-btn is-secondary" style={{ width: "60%", height: "50px", margin: "10px", textAlign: "center" }}>Play Again!</Link>
                 </footer>
-
             </div>
-
-            
         ));
-        return <div>{scoreBoardView}</div>
-
-
-
-
-
-            
-            
         
-
+        return <div>{scoreBoardView}</div>
     }
 }
 
