@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 var $ = require('jquery');
 
 class Highscores extends Component {
-    
     constructor() {
         super();
         this.state = {
@@ -13,26 +12,18 @@ class Highscores extends Component {
             category: ""
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
-        this.setCategory = this.setCategory.bind(this);
     }
     
-    fetchScoreData = () => {
-        return $.get(`http://localhost:2020/highscores/${this.state.category}`, response => {
+    fetchScoreData = (category) => {
+        return $.get(`http://localhost:2020/highscores/${category}`, response => {
             this.setState(
                 {
                     scoreData: response
                 }
             )
-            setTimeout(5000, () => {this.render(); console.log("FETCH")})
-            
-            
+            setTimeout(5000, () => {this.render();})
         })
     };
-
-    setCategory(e) {
-        this.setState({category: e.target.options[e.target.selectedIndex].value});
-        this.fetchScoreData();
-    }
 
     componentDidMount() {
         this.fetchScoreData()
@@ -59,8 +50,8 @@ class Highscores extends Component {
                 <h1>High Scores</h1>
             </div>
             <div className="nes-select">
-                <select id="category" onChange={this.setCategory}>
-                    <option value="">Any Category</option>
+                <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
+                    <option>Any Category</option>
                     <option value="9">General Knowledge</option>
                     <option value="10">Entertainment: Books</option>
                     <option value="11">Entertainment: Film</option>
