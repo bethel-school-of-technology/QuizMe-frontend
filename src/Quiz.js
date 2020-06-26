@@ -38,7 +38,9 @@ class Quiz extends React.Component {
         )
     }
     componentDidMount() {
-        $.get("https://opentdb.com/api_token.php?command=request", data => {this.sessionToken = data.token})
+        fetch("https://opentdb.com/api_token.php?command=request")
+        .then(data => data.json())
+        .then(data => {this.sessionToken = data.token})
         .then(() => {this.getQuestion().then(() => this.startTimer())});
     }    
     getQuestion() {
