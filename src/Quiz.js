@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import './Quiz.css';
-var $ = require('jquery');
-
 
 class Quiz extends Component {
     timerMax = 60;
@@ -46,7 +44,8 @@ class Quiz extends Component {
     getQuestion() {
         var url = `https://opentdb.com/api.php?token=${this.sessionToken}&amount=1
             ${this.props.match.params.category !== undefined ? `&category=${this.props.match.params.category}` : ""}`;
-        return $.get(url, data => {
+        return fetch(url).then(response => response.json())
+        .then(data => {
             if(data.response_code !== 0) {this.setState({gameOver: true}); return} 
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
