@@ -4,12 +4,15 @@ import Quiz from './Quiz';
 import SelectCategory from './SelectCategory';
 import Home from "./Home";
 import Login from "./Login";
+import Highscores from "./Highscores"
+
 function App() {
   return (
       <Router>
         <Switch>
           <Route path="/" component={Home} exact/>
           <Route path="/Login" component={Login} exact/>
+          <Route path="/Highscores" component={Highscores} exact/>
           <Route path="/SelectCategory" component={SelectCategory}/>
           <Route path="/Quiz/:category" render={(props) => {
             return <Quiz {...props}/>
