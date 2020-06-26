@@ -8,7 +8,7 @@ class Home extends Component {
               <h1 style={{textAlign: "center"}}>QuizMe</h1>
               <h2 style={{textAlign: "center"}} id="funnyPhrase">Funny Phrase</h2>
               <Link to="/SelectCategory" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Play</Link>
-              <Link to="/Scores" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Scores</Link>
+              <Link to="/Highscores" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Scores</Link>
               <Link to="/Login" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Login</Link>
       </div>)
   }
