@@ -1,8 +1,7 @@
-// import ReactDOM from 'react-dom';
+
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
-var $ = require('jquery');
+
 
 class Highscores extends Component {
 
@@ -16,17 +15,14 @@ class Highscores extends Component {
         this.setCategory = this.setCategory.bind(this);
     }
     
-    fetchScoreData = () => {
-        return $.get(`http://localhost:2020/highscores/${this.state.category}`, response => {
+    fetchScoreData = (category) => {
+        return fetch(`http://localhost:2020/highscores/${category}`).then(response => response.json()).then( data =>
             this.setState(
                 {
-                    scoreData: response
+                    scoreData: data
                 }
             )
-            setTimeout(5000, () => {this.render(); console.log("FETCH")})
-            
-            
-        })
+        )
     };
 
     setCategory(e) {
