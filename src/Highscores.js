@@ -13,10 +13,10 @@ class Highscores extends Component {
     }
     
     fetchScoreData = (category) => {
-        return fetch(`https://api.quizme.dev/highscores/${category}`).then(data => data.json()).then(data => {
+        return fetch(`https://api.quizme.dev/highscores/${category}`).then(data => data.json()).then(response => {
             this.setState(
                 {
-                    scoreData: data
+                    scoreData: response
                 }
             );
         })
