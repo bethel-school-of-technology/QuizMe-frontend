@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './Quiz.css';
 
 class Quiz extends Component {
-    timerMax = 60;
+    timerMax = 5;
     state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false};
     question = 1;
     correctAnswers = 0;
@@ -21,7 +21,13 @@ class Quiz extends Component {
                             onClick={() => this.nextQuestion(index)}>{answer}</div>))
         if(this.state.gameOver) {
             return(
-                <div style={{textAlign: "center"}}>Game Over<br/>Your score:<br/>{this.correctAnswers} out of {this.question}</div>
+                <div style={{textAlign: "center"}}>
+                     <div color="red">Game Over!</div>
+                     <br/>
+                    <input placeholder= "Name"/>
+                   <br/>
+                   Your score: {this.correctAnswers * 100 }
+                </div>
             )
         }
         return (

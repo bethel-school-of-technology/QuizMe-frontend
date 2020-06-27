@@ -16,7 +16,7 @@ class Highscores extends Component {
         return fetch(`http://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
             this.setState(
                 {
-                    scoreData: data
+                    scoreData: response
                 }
             );
         })
