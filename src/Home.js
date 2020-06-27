@@ -3,18 +3,14 @@ import {Link} from 'react-router-dom';
  
 class Home extends Component {
   render() {
-      return (
-          <div style={{
-              width: "50%", height: "100%",
-              margin: "0 auto", display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center"
-          }}>
-              <h1>QuizMe</h1>
-              <h2>Funny Phrase</h2>
-              <Link to="/SelectCategory" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Play</Link>
-              <Link to="/Highscores" className="nes-btn is-primary" style={{ width: "75%", height: "50px", margin: "10px", textAlign: "center" }}>Scores</Link>
-          </div>
-      );
+      return ( 
+      <div>
+              <h1 style={{textAlign: "center"}}>QuizMe</h1>
+              <h2 style={{textAlign: "center"}} id="funnyPhrase">Funny Phrase</h2>
+              <Link to="/SelectCategory" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Play</Link>
+              <Link to="/Highscores" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Scores</Link>
+              <Link to="/Login" className="nes-btn is-primary" style={{ width: "100%", height: "50px"}}>Login</Link>
+      </div>)
   }
 }
  

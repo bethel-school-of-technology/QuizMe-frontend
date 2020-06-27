@@ -1,8 +1,0 @@
-#App {
-    position: absolute;
-    margin: auto;
-}
-
-body, html, #root {
-  height: 100%;
-}
