@@ -22,14 +22,36 @@ class Quiz extends Component {
         if(this.state.gameOver) {
             return(
                 <div style={{textAlign: "center"}}>
-                     <div color="red">Game Over!</div>
-                     <br/>
-                    <input placeholder= "Name"/>
-                   <br/>
-                   Your score: {this.correctAnswers * 100 }
+                    <div style={{color: "red"}}>Game Over!</div>
+                    <br/>
+                    Your score: { this.correctAnswers * 100 }
+                    <br/>
+                    <input placeholder= "Name"/> <button onClick="postScore">Confirm</button>
                 </div>
             )
         }
+
+        //need the onclick event to be referenced differently from this function, can't put a function within a function
+        function postScore (url = "", data = {}) {
+            const response = await fetch (url, {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                  },
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data)
+            });
+            return response.json();
+        }
+
+        postScore('http://localhost:2020/highscores/${category}', { score })  //Where/how are we able to define this variable to be the user name/score???
+            .then(data => {
+            console.log(data);
+        }).then(window.location.replace('http://localhost:2020/highscores/${category}'));  //no idea if this will work
+        
+        
+
         return (
             <div id='Quiz' className="nes-container is-dark">
                 <div id="question" className="nes-container is-dark with-title">
