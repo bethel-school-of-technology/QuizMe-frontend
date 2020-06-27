@@ -48,8 +48,7 @@ class Quiz extends Component {
         postScore('http://localhost:2020/highscores/${category}', { score })  //Where/how are we able to define this variable to be the user name/score???
             .then(data => {
             console.log(data);
-        }).then(window.location.replace('http://localhost:2020/highscores/${category}'));  //no idea if this will work
-        
+        }).then(result => res.redirect('http://localhost:2020/highscores/${category}'))
         
 
         return (
