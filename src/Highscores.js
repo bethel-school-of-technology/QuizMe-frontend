@@ -1,4 +1,4 @@
-// import ReactDOM from 'react-dom';
+
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
@@ -13,10 +13,10 @@ class Highscores extends Component {
     }
     
     fetchScoreData = (category) => {
-        return fetch(`http://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
+        return fetch(`http://api.quizme.dev/highscores/${category}`).then(data => data.json()).then(data => {
             this.setState(
                 {
-                    scoreData: response
+                    scoreData: data
                 }
             );
         })
@@ -29,7 +29,7 @@ class Highscores extends Component {
         <div style={{
             width: "100%", height: "100%",
             margin: "0 auto", display: "flex",
-            alignItems: "center", justifyContent: "center", flexDirection: "column"
+            alignItems: "center", justifyContent: "center", flexDirection: "column", textAlign: "left"
         }}>
             {this.state.scoreData ? 
                 (<div className="nes-container is-dark">
