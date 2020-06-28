@@ -107,8 +107,8 @@ class Highscores extends Component {
                                 (this.state.posted || this.props.category === undefined) ? 
                                     <></> : 
                                     <tr>
-                                        <td><input id="nameInput" placeholder="Player Name" /></td>
-                                        <td style={{textAlign: "right"}}><button onClick={() => this.postScore()} >Confirm</button></td>
+                                        <td><input id="nameInput" placeholder="Player Name" className="nes-input is-dark"/></td>
+                                        <td style={{textAlign: "right"}}><button className="nes-btn is-primary" onClick={() => this.postScore()} >Confirm</button></td>
                                     </tr>
                             }
                             
