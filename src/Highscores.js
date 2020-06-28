@@ -7,7 +7,8 @@ class Highscores extends Component {
         super();
         this.state = {
             scoreData: null,
-            category: ""
+            category: "",
+            posted: false
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
         this.postScore = this.postScore.bind(this);
@@ -20,7 +21,7 @@ class Highscores extends Component {
             playername: document.getElementById("nameInput").value,
             highscore: this.props.correctAnswers * 100
         };
-
+        this.setState({posted: true});
         fetch(url, {
             method: 'POST',
             cache: 'no-cache',
@@ -29,7 +30,8 @@ class Highscores extends Component {
             },
             referrerPolicy: 'origin-when-cross-origin',
             body: JSON.stringify(data)
-        }).then(() => this.fetchScoreData(this.props.category || ""));
+        }).then(() => this.fetchScoreData(this.props.category || ""))
+        .catch(() => this.setState({posted: false}));
     };
     
     fetchScoreData = (category) => {
@@ -44,7 +46,6 @@ class Highscores extends Component {
 
     render() {
         if (!this.state.scoreData) this.fetchScoreData(this.props.category || "");
-
         return (
         <div style={{
             width: "100%", height: "100%",
@@ -55,33 +56,38 @@ class Highscores extends Component {
                 (<div className="nes-container is-dark">
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
                     <div className="nes-select" style={{marginTop: "10px"}}>
-                        <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
-                            <option value="">Any Category</option>
-                            <option value="9">General Knowledge</option>
-                            <option value="10">Entertainment: Books</option>
-                            <option value="11">Entertainment: Film</option>
-                            <option value="12">Entertainment: Music</option>
-                            <option value="13">Entertainment: Musicals &amp; Theatres</option>
-                            <option value="14">Entertainment: Television</option>
-                            <option value="15">Entertainment: Video Games</option>
-                            <option value="16">Entertainment: Board Games</option>
-                            <option value="17">Science &amp; Nature</option>
-                            <option value="18">Science: Computers</option>
-                            <option value="19">Science: Mathematics</option>
-                            <option value="20">Mythology</option>
-                            <option value="21">Sports</option>
-                            <option value="22">Geography</option>
-                            <option value="23">History</option>
-                            <option value="24">Politics</option>
-                            <option value="25">Art</option>
-                            <option value="26">Celebrities</option>
-                            <option value="27">Animals</option>
-                            <option value="28">Vehicles</option>
-                            <option value="29">Entertainment: Comics</option>
-                            <option value="30">Science: Gadgets</option>
-                            <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
-                            <option value="32">Entertainment: Cartoon &amp; Animations</option>
-                        </select>
+                        {
+                            this.props.category === undefined ? 
+                            <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
+                                    <option value="">Any Category</option>
+                                    <option value="9">General Knowledge</option>
+                                    <option value="10">Entertainment: Books</option>
+                                    <option value="11">Entertainment: Film</option>
+                                    <option value="12">Entertainment: Music</option>
+                                    <option value="13">Entertainment: Musicals &amp; Theatres</option>
+                                    <option value="14">Entertainment: Television</option>
+                                    <option value="15">Entertainment: Video Games</option>
+                                    <option value="16">Entertainment: Board Games</option>
+                                    <option value="17">Science &amp; Nature</option>
+                                    <option value="18">Science: Computers</option>
+                                    <option value="19">Science: Mathematics</option>
+                                    <option value="20">Mythology</option>
+                                    <option value="21">Sports</option>
+                                    <option value="22">Geography</option>
+                                    <option value="23">History</option>
+                                    <option value="24">Politics</option>
+                                    <option value="25">Art</option>
+                                    <option value="26">Celebrities</option>
+                                    <option value="27">Animals</option>
+                                    <option value="28">Vehicles</option>
+                                    <option value="29">Entertainment: Comics</option>
+                                    <option value="30">Science: Gadgets</option>
+                                    <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
+                                    <option value="32">Entertainment: Cartoon &amp; Animations</option>
+                                </select>
+                                :
+                                <></>
+                        }
                     </div>
                     <table style={{width: "100%", marginTop: "10px"}}>
                         <tbody>
@@ -97,10 +103,15 @@ class Highscores extends Component {
                                     </tr>
                                 ))
                             }
-                            <tr>
-                                <td><input id="nameInput" placeholder="Player Name" /></td>
-                                <td style={{textAlign: "right"}}><button onClick={() => this.postScore()} >Confirm</button></td>
-                            </tr>
+                            {
+                                (this.state.posted || this.props.category === undefined) ? 
+                                    <></> : 
+                                    <tr>
+                                        <td><input id="nameInput" placeholder="Player Name" /></td>
+                                        <td style={{textAlign: "right"}}><button onClick={() => this.postScore()} >Confirm</button></td>
+                                    </tr>
+                            }
+                            
                             
                         </tbody>
                     </table>
