@@ -10,7 +10,7 @@ class Quiz extends Component {
     sessionToken;
     timeBonus = 5;
     timePenalty = 3;
-    category = 0;
+    category = "";
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
@@ -21,7 +21,7 @@ class Quiz extends Component {
 
     render() {
         
-        if(!(this.category && this.props.match.params)) {this.category =  parseInt(this.props.match.params.category) || 1}
+        if(!(this.category && this.props.match.params)) {this.category =  parseInt(this.props.match.params.category) || ""}
         var answers = [];
         this.state.answers.forEach((answer, index) =>
         answers.push(<div key={index} className="nes-btn is-primary answer"

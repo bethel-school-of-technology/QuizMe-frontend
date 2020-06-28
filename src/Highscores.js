@@ -21,7 +21,7 @@ class Highscores extends Component {
             highscore: this.props.correctAnswers * 100
         };
 
-        const response = fetch(url, {
+        fetch(url, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -29,7 +29,7 @@ class Highscores extends Component {
             },
             referrerPolicy: 'origin-when-cross-origin',
             body: JSON.stringify(data)
-        });
+        }).then(() => this.fetchScoreData(this.props.category || ""));
     };
     
     fetchScoreData = (category) => {
@@ -43,7 +43,7 @@ class Highscores extends Component {
     };
 
     render() {
-        if (!this.state.scoreData) this.fetchScoreData("");
+        if (!this.state.scoreData) this.fetchScoreData(this.props.category || "");
 
         return (
         <div style={{
@@ -53,8 +53,6 @@ class Highscores extends Component {
         }}>
             {this.state.scoreData ? 
                 (<div className="nes-container is-dark">
-                    <input id="nameInput" placeholder="Player Name" /> <button onClick={() => this.postScore()} >Confirm</button>
-
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
                     <div className="nes-select" style={{marginTop: "10px"}}>
                         <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
@@ -99,9 +97,18 @@ class Highscores extends Component {
                                     </tr>
                                 ))
                             }
+                            <tr>
+                                <td><input id="nameInput" placeholder="Player Name" /></td>
+                                <td style={{textAlign: "right"}}><button onClick={() => this.postScore()} >Confirm</button></td>
+                            </tr>
+                            
                         </tbody>
                     </table>
-                </div>) : <div>Fetching score data...</div>}
+                    
+                </div>) 
+                :
+                <div>Fetching score data...</div>
+            }
             <footer style={{position: "fixed", bottom: "20px"}}>
                 <Link to="/" className="nes-btn is-primary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Home</Link>
                 <Link to="/SelectCategory" className="nes-btn is-secondary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Play Again!</Link>
