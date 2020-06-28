@@ -3,53 +3,74 @@ import './Quiz.css';
 
 class Quiz extends Component {
     timerMax = 5;
-    state = {questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false};
+    state = { questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false };
     question = 1;
     correctAnswers = 0;
     sessionToken;
     timeBonus = 5;
     timePenalty = 3;
+    category = 1;
+    // category = Quiz.props.match.params.category ? `&category=${this.props.match.params.category}` : '' ;
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
         this.nextQuestion = this.nextQuestion.bind(this);
+        this.postScore = this.postScore.bind(this);
     }
+
+    postScore (url = "http://localhost:2020/highscores/") {
+        var data = {
+            category: this.category,
+            playername: document.getElementById("nameInput").value,
+            highscore: this.correctAnswers * 100
+        };
+        console.log(data.category);
+        console.log(data.playername);
+        console.log(data.highscore);
+
+        
+        const response = fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            referrerPolicy: 'origin-when-cross-origin',
+            body: JSON.stringify(data)
+        });
+    };
+
     render() {
+        if(!(this.category && this.props.match.params)) {this.category =  this.props.match.params.category || ""}
         var answers = [];
-        this.state.answers.forEach((answer, index) => 
-            answers.push(<div key={index} className="nes-btn is-primary answer"
-                            onClick={() => this.nextQuestion(index)}>{answer}</div>))
-        if(this.state.gameOver) {
-            return(
-                <div style={{textAlign: "center"}}>
-                    <div style={{color: "red"}}>Game Over!</div>
-                    <br/>
-                    Your score: { this.correctAnswers * 100 }
-                    <br/>
-                    <input placeholder= "Name"/> <button onClick="postScore">Confirm</button>
+        this.state.answers.forEach((answer, index) =>
+        answers.push(<div key={index} className="nes-btn is-primary answer"
+        onClick={() => this.nextQuestion(index)}>{answer}</div>))
+        if (this.state.gameOver) {
+            
+            return (
+                <div style={{ textAlign: "center" }}>
+                    <div style={{ color: "red" }}>Game Over!</div>
+                    <br />
+                    Your score: { this.correctAnswers * 100}
+                    <br />
+                    <input id="nameInput" placeholder="Player Name" /> <button onClick={() => this.postScore()} >Confirm</button>
                 </div>
             )
         }
-
-        //need the onclick event to be referenced differently from this function, can't put a function within a function
-        function postScore (url = "", data = {}) {
-            const response = await fetch (url, {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json'
-                  },
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(data)
-            });
-            return response.json();
-        }
-
-        postScore('http://localhost:2020/highscores/${category}', { score })  //Where/how are we able to define this variable to be the user name/score???
-            .then(data => {
-            console.log(data);
-        }).then(result => res.redirect('http://localhost:2020/highscores/${category}'))
         
+        
+        
+       
+            
+        // postScore('http://localhost:2020/highscores/', gameData )  //Where/how are we able to define this variable to be the user name/score???
+        //     .then(data => {
+        //     console.log(data);
+        // }).then(window.location.href = 'http://localhost:3000/highscores/');
+
+
+
+
 
         return (
             <div id='Quiz' className="nes-container is-dark">
@@ -65,30 +86,30 @@ class Quiz extends Component {
         )
     }
     componentDidMount() {
-        fetch("https://opentdb.com/api_token.php?command=request").then(data => data.json()).then(data => {this.sessionToken = data.token})
-        .then(() => {this.getQuestion().then(() => this.startTimer())});
-    }    
+        fetch("https://opentdb.com/api_token.php?command=request").then(data => data.json()).then(data => { this.sessionToken = data.token })
+            .then(() => { this.getQuestion().then(() => this.startTimer()) });
+    }
     getQuestion() {
         let category = this.props.match.params.category ? `&category=${this.props.match.params.category}` : ''
         return fetch(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1${category}`).then(data => data.json()).then(data => {
-            if(data.response_code !== 0) {this.setState({gameOver: true}); return} 
+            if (data.response_code !== 0) { this.setState({ gameOver: true }); return }
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
-            var answers = [...incorrectAnswers, correctAnswer].sort(() => {return 0.5 - Math.random()});
+            var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });
             answers.forEach((element, index) => {
                 answers[index] = this.htmlDecode(answers[index]);
                 correctAnswer = (correctAnswer === element) ? index : correctAnswer;
             });
-            this.setState({questionText: this.htmlDecode(data.results[0].question), answers: answers, correctAnswer: correctAnswer})
+            this.setState({ questionText: this.htmlDecode(data.results[0].question), answers: answers, correctAnswer: correctAnswer })
         })
     }
     nextQuestion(index) {
-        if(this.state.gameOver) return;
-        var correct = index===this.state.correctAnswer;
-        if(correct) {
-            this.setState({timerValue: this.state.timerValue > this.timerMax-5 ? this.timerMax : this.state.timerValue + this.timeBonus})
+        if (this.state.gameOver) return;
+        var correct = index === this.state.correctAnswer;
+        if (correct) {
+            this.setState({ timerValue: this.state.timerValue > this.timerMax - 5 ? this.timerMax : this.state.timerValue + this.timeBonus })
             this.correctAnswers++;
-        } else this.setState({timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0})
+        } else this.setState({ timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0 })
         this.getQuestion().then(this.question++);
         var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
@@ -102,17 +123,19 @@ class Quiz extends Component {
             timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
         }, 600)
     }
-    htmlDecode(input){
+    htmlDecode(input) {
         var e = document.createElement('div');
         e.innerHTML = input;
         return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
     }
     async startTimer() {
-        var countdown = setInterval(() => {this.setState({timerValue: this.state.timerValue-1})}, 1000)
-        setInterval(() => {if(this.state.timerValue === 0 || this.state.gameOver) {
-            this.setState({gameOver: true});
-            clearInterval(countdown);
-        }})
+        var countdown = setInterval(() => { this.setState({ timerValue: this.state.timerValue - 1 }) }, 1000)
+        setInterval(() => {
+            if (this.state.timerValue === 0 || this.state.gameOver) {
+                this.setState({ gameOver: true });
+                clearInterval(countdown);
+            }
+        })
     }
 }
 
