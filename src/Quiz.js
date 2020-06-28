@@ -3,7 +3,7 @@ import './Quiz.css';
 import Highscores from "./Highscores";
 
 class Quiz extends Component {
-    timerMax = 5;
+    timerMax = 60;
     state = { questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false };
     question = 1;
     correctAnswers = 0;
