@@ -10,7 +10,27 @@ class Highscores extends Component {
             category: ""
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
+        this.postScore = this.postScore.bind(this);
+
     }
+
+    postScore (url = "http://localhost:2020/highscores/") {
+        var data = {
+            category: this.props.category,
+            playername: document.getElementById("nameInput").value,
+            highscore: this.props.correctAnswers * 100
+        };
+
+        const response = fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            referrerPolicy: 'origin-when-cross-origin',
+            body: JSON.stringify(data)
+        });
+    };
     
     fetchScoreData = (category) => {
         return fetch(`http://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
@@ -33,6 +53,8 @@ class Highscores extends Component {
         }}>
             {this.state.scoreData ? 
                 (<div className="nes-container is-dark">
+                    <input id="nameInput" placeholder="Player Name" /> <button onClick={() => this.postScore()} >Confirm</button>
+
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
                     <div className="nes-select" style={{marginTop: "10px"}}>
                         <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>

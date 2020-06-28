@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './Quiz.css';
+import Highscores from "./Highscores";
 
 class Quiz extends Component {
     timerMax = 5;
@@ -9,39 +10,18 @@ class Quiz extends Component {
     sessionToken;
     timeBonus = 5;
     timePenalty = 3;
-    category = 1;
-    // category = Quiz.props.match.params.category ? `&category=${this.props.match.params.category}` : '' ;
+    category = 0;
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
         this.nextQuestion = this.nextQuestion.bind(this);
-        this.postScore = this.postScore.bind(this);
     }
 
-    postScore (url = "http://localhost:2020/highscores/") {
-        var data = {
-            category: this.category,
-            playername: document.getElementById("nameInput").value,
-            highscore: this.correctAnswers * 100
-        };
-        console.log(data.category);
-        console.log(data.playername);
-        console.log(data.highscore);
-
-        
-        const response = fetch(url, {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            referrerPolicy: 'origin-when-cross-origin',
-            body: JSON.stringify(data)
-        });
-    };
+    
 
     render() {
-        if(!(this.category && this.props.match.params)) {this.category =  this.props.match.params.category || ""}
+        
+        if(!(this.category && this.props.match.params)) {this.category =  parseInt(this.props.match.params.category) || 1}
         var answers = [];
         this.state.answers.forEach((answer, index) =>
         answers.push(<div key={index} className="nes-btn is-primary answer"
@@ -49,29 +29,11 @@ class Quiz extends Component {
         if (this.state.gameOver) {
             
             return (
-                <div style={{ textAlign: "center" }}>
-                    <div style={{ color: "red" }}>Game Over!</div>
-                    <br />
-                    Your score: { this.correctAnswers * 100}
-                    <br />
-                    <input id="nameInput" placeholder="Player Name" /> <button onClick={() => this.postScore()} >Confirm</button>
-                </div>
+                <Highscores category={this.category} correctAnswers={this.correctAnswers}/>
             )
+
         }
-        
-        
-        
        
-            
-        // postScore('http://localhost:2020/highscores/', gameData )  //Where/how are we able to define this variable to be the user name/score???
-        //     .then(data => {
-        //     console.log(data);
-        // }).then(window.location.href = 'http://localhost:3000/highscores/');
-
-
-
-
-
         return (
             <div id='Quiz' className="nes-container is-dark">
                 <div id="question" className="nes-container is-dark with-title">
