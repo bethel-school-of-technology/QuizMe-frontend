@@ -35,12 +35,12 @@ class Quiz extends Component {
         }
        
         return (
-            <div id='Quiz' className="nes-container is-dark">
-                <div id="question" className="nes-container is-dark with-title">
-                    <p className="title">Question {this.question}</p>
+            <div id='quizme-quiz-container' className="nes-container is-dark">
+                <div id="quizme-quiz-question" className="nes-container is-dark with-title">
+                    <p id="quizme-quiz-question-number" className="title">Question {this.question}</p>
                     <p>{this.state.questionText}</p>
                 </div>
-                <div id="answers">
+                <div id="quizme-quiz-answers">
                     {answers}
                 </div>
                 <progress id="timer" className="nes-progress is-primary" value={this.state.timerValue} max={this.timerMax}></progress>
