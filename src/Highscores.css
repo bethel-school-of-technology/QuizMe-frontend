@@ -1,0 +1,82 @@
+#quizme-highscores-container {
+    width: 80vw
+}
+
+#quizme-highscores-container h1 {
+    font-size: 4vw;
+}
+
+#quizme-highscores-container select {
+    margin-top: 1vw;
+    font-size: 2vw;
+}
+
+#quizme-highscores-container table {
+    width: 100%;
+    margin-top: 1vw;
+    font-size: 2vw;
+}
+
+#quizme-highscores-input {
+    margin-top: 2vw;
+    font-size: 2vw;
+    height: 3vw;
+}
+
+#quizme-highscores-input input, #quizme-highscores-input button {
+    height: 3vw;
+}
+
+#quizme-highscores-container footer {
+    position: fixed;
+    bottom: 2vw;
+}
+
+#quizme-highscores-container footer a {
+    height: 6vw;
+    font-size: 2vw;
+}
+
+@media screen and (min-aspect-ratio: 1/1) {
+    #quizme-highscores-container {
+        width: 80vh;
+    }
+
+    #quizme-highscores-container h1 {
+        font-size: 4vh;
+    }
+    
+    #quizme-highscores-container select {
+        margin-top: 1vh;
+        font-size: 2vh;
+    }
+    
+    #quizme-highscores-container table {
+        width: 100%;
+        margin-top: 1vh;
+        font-size: 2vh;
+    }
+    
+    #quizme-highscores-input {
+        margin-top: 2vh;
+        font-size: 2vh;
+        height: 6vh;
+    }
+    
+    #quizme-highscores-input input, #quizme-highscores-input button {
+        height: 6vh;
+    }
+    
+    #quizme-highscores-footer {
+        position: fixed;
+        width: 80vh;
+        display: flex;
+        justify-content: center;
+        bottom: 4vh;
+    }
+    
+    #quizme-highscores-footer a {
+        height: 6vh;
+        font-size: 2vh;
+    }
+}

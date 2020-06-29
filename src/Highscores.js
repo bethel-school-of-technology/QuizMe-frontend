@@ -1,13 +1,13 @@
 
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import './Highscores.css';
 
 class Highscores extends Component {
     constructor() {
         super();
         this.state = {
             scoreData: null,
-            category: "",
             posted: false
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
@@ -46,20 +46,16 @@ class Highscores extends Component {
 
     render() {
         if (!this.state.scoreData) this.fetchScoreData(this.props.category || "");
-        return (
-        <div style={{
-            width: "100%", height: "100%",
-            margin: "0 auto", display: "flex",
-            alignItems: "center", justifyContent: "center", flexDirection: "column", textAlign: "left"
-        }}>
-            {this.state.scoreData ? 
-                (<div className="nes-container is-dark">
+        return ([
+            this.state.scoreData ? 
+                (<div id="quizme-highscores-container" className="nes-container is-dark">
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
-                    <div className="nes-select" style={{marginTop: "10px"}}>
                         {
                             this.props.category === undefined ? 
-                            <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
-                                    <option value="">Any Category</option>
+                            <div className="nes-select">
+                                <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
+                                    <option value="">All Categories</option>
+                                    <option value="0">Any Category</option>
                                     <option value="9">General Knowledge</option>
                                     <option value="10">Entertainment: Books</option>
                                     <option value="11">Entertainment: Film</option>
@@ -85,11 +81,11 @@ class Highscores extends Component {
                                     <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
                                     <option value="32">Entertainment: Cartoon &amp; Animations</option>
                                 </select>
-                                :
-                                <></>
+                            </div>
+                            :
+                            <></>
                         }
-                    </div>
-                    <table style={{width: "100%", marginTop: "10px"}}>
+                    <table >
                         <tbody>
                             <tr style={{color: "red"}}>
                                 <th>Name</th>
@@ -106,7 +102,7 @@ class Highscores extends Component {
                             {
                                 (this.state.posted || this.props.category === undefined) ? 
                                     <></> : 
-                                    <tr>
+                                    <tr id="quizme-highscores-input">
                                         <td><input id="nameInput" placeholder="Player Name" className="nes-input is-dark"/></td>
                                         <td style={{textAlign: "right"}}><button className="nes-btn is-primary" onClick={() => this.postScore()} >Confirm</button></td>
                                     </tr>
@@ -118,13 +114,12 @@ class Highscores extends Component {
                     
                 </div>) 
                 :
-                <div>Fetching score data...</div>
-            }
-            <footer style={{position: "fixed", bottom: "20px"}}>
-                <Link to="/" className="nes-btn is-primary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Home</Link>
-                <Link to="/SelectCategory" className="nes-btn is-secondary" style={{ height: "50px", margin: "10px, auto", textAlign: "center" }}>Play Again!</Link>
-            </footer>
-        </div>
+                <div>Fetching score data...</div>,
+                <footer id="quizme-highscores-footer">
+                    <Link to="/" className="nes-btn is-primary">Home</Link>
+                    <Link to="/SelectCategory" className="nes-btn is-secondary">Play Again!</Link>
+                </footer>
+            ]
         )
     }
 }
