@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
+import './Home.css';
  
 class Home extends Component {
   state = {
@@ -18,8 +19,8 @@ class Home extends Component {
   render() {
       if(!this.cycling) {this.cycleColors(); this.cycling = true}
       return ( 
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-              <span style={{fontSize: "10vw"}}>
+      <div id="container">
+              <span id="QuizMe">
                 <span style={{color: this.state.colors[5]}}>Q</span>
                 <span style={{color: this.state.colors[4]}}>u</span>
                 <span style={{color: this.state.colors[3]}}>i</span>
@@ -27,12 +28,12 @@ class Home extends Component {
                 <span style={{color: this.state.colors[1]}}>M</span>
                 <span style={{color: this.state.colors[0]}}>e</span>!
               </span>
-              <Link to="/SelectCategory" className="nes-btn is-primary" style={{ fontSize: "5vw", width: "40vw", marginTop: "2vw"}}>Play</Link>
-              <Link to="/Highscores" className="nes-btn is-primary" style={{ fontSize: "5vw", width: "40vw", marginTop: "2vw"}}>Scores</Link>
+              <Link to="/SelectCategory" className="nes-btn is-primary">Play</Link>
+              <Link to="/Highscores" className="nes-btn is-primary">Scores</Link>
       </div>)
   }
 
-  async cycleColors() {
+  cycleColors() {
     setInterval(() => {
       var newColors = ["","","","","",""];
       this.state.colors.forEach((color, index) => {
