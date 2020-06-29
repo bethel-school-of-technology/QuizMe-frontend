@@ -13,10 +13,10 @@ class SelectCategory extends React.Component {
     }
     render() {
         return (
-            <div id="select-category" className="nes-container is-dark">
-                <h1>Categories</h1>
+            <div id="quizme-select-category-container" className="nes-container is-dark">
+                <h1 id="quizme-select-category-h1">Categories</h1>
                 <div className="nes-select">
-                    <select id="category" onChange={this.setCategory}>
+                    <select id="quizme-select-category-select" onChange={this.setCategory}>
                         <option>Any Category</option>
                         <option value="9">General Knowledge</option>
                         <option value="10">Entertainment: Books</option>
@@ -44,7 +44,7 @@ class SelectCategory extends React.Component {
                         <option value="32">Entertainment: Cartoon &amp; Animations</option>
                     </select>
                 </div>
-                <Link to={`/Quiz/${this.state.category}`} className="nes-btn is-primary">
+                <Link id="quizme-select-category-link" to={`/Quiz/${this.state.category}`} className="nes-btn is-primary">
                     Continue
                 </Link>
             </div>

@@ -1,6 +1,43 @@
-#select-category {
+#quizme-select-category-container {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 3vw;
+    width: 80vw;
+    font-size: 2vw;
+}
+
+#quizme-select-category-h1 {
+    font-size: 5vw;
+}
+
+#quizme-select-category-select {
+    font-size: 2vw;
+}
+
+#quizme-select-category-link {
+    font-size: 2vw;
+}
+
+@media screen and (min-aspect-ratio: 1/1) {
+    #quizme-select-category-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 3vh;
+        width: 80vh;
+        font-size: 2vh;
+    }
+    
+    #quizme-select-category-h1 {
+        font-size: 5vh;
+    }
+    
+    #quizme-select-category-select {
+        font-size: 2vh;
+    }
+    
+    #quizme-select-category-link {
+        font-size: 2vh;
+    }
 }
