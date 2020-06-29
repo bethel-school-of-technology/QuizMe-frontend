@@ -35,7 +35,7 @@ class Highscores extends Component {
     };
     
     fetchScoreData = (category) => {
-        return fetch(`https://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
+        return fetch(`http://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
             this.setState(
                 {
                     scoreData: response
@@ -51,7 +51,7 @@ class Highscores extends Component {
                 (<div id="quizme-highscores-container" className="nes-container is-dark">
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
                         {
-                            this.props.category === undefined ? 
+                            this.props.category === undefined || this.state.posted? 
                             <div className="nes-select">
                                 <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
                                     <option value="">All Categories</option>
