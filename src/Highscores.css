@@ -1,5 +1,5 @@
 #quizme-highscores-container {
-    width: 80vw
+    width: 80vw;
 }
 
 #quizme-highscores-container h1 {
@@ -20,19 +20,22 @@
 #quizme-highscores-input {
     margin-top: 2vw;
     font-size: 2vw;
-    height: 3vw;
+    height: 6vw;
 }
 
 #quizme-highscores-input input, #quizme-highscores-input button {
-    height: 3vw;
+    height: 6vw;
 }
 
-#quizme-highscores-container footer {
+#quizme-highscores-footer {
     position: fixed;
-    bottom: 2vw;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    bottom: 4vw;
 }
 
-#quizme-highscores-container footer a {
+#quizme-highscores-footer a {
     height: 6vw;
     font-size: 2vw;
 }
