@@ -1,25 +1,25 @@
-#container {
+#quizme-home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#QuizMe {
+#quizme-home-quizme {
     font-size: 10vw;
 }
 
-.nes-btn {
+.quizme-home-button {
     font-size: 5vw;
     width: 40vw;
     margin-top: 2vw;
 }
 
-@media screen and (min-aspect-ratio: 2/1) {
-    #QuizMe {
-        font-size: 10vh
+@media screen and (min-aspect-ratio: 1/1) {
+    #quizme-home-quizme {
+        font-size: 10vh;
     }
     
-    .nes-btn {
+    .quizme-home-button {
         font-size: 5vh;
         width: 40vh;
         margin-top: 2vh;
