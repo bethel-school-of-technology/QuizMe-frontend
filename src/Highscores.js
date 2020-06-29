@@ -15,7 +15,7 @@ class Highscores extends Component {
 
     }
 
-    postScore (url = "http://localhost:2020/highscores/") {
+    postScore (url = "https://api.quizme.dev/highscores/") {
         var data = {
             category: this.props.category,
             playername: document.getElementById("nameInput").value,
