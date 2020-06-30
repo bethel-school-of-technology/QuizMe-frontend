@@ -1,11 +1,22 @@
 import React, { Component } from "react";
+import './Login.css';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class Login extends Component {
         constructor(props) {
           super(props);
           this.state = {
             username: "",
-            password: ""
+            password: "",
+            colors: [
+              "#FFF",
+              "#0F0",
+              "#F0F",
+              "#FFF",
+              "#0F0",
+              "#F0F"
+            ]
           };
         }
         handleInputChange = event => {
@@ -17,71 +28,49 @@ class Login extends Component {
       
       
         onSubmit = event => {
-          event.preventDefault();
-          const login = {
-            username: this.state.username,
-            password: this.state.password
-          };
-          fetch
-            .post("/users/login", login)
-            .then(response => {
-              if (response.data === "Wrong password") {
-                console.log(response);
-                alert("Invalid password! Please try again.");
-              }
-              if (response.data.username === "mik3sKey" && response.data !== "Wrong password" && response.status === 200) {
-                console.log(response);
-                console.log(response.headers.authorization);
-                const authCookie ="mik3sKey=" + response.headers.authorization;
-                document.cookie = authCookie;
-                alert("You are logged in as Admin!");
-                this.props.history.push("/adminbloglist");
-              }
-              else if (response.data !== "Wrong password" && response.status === 200) {
-                console.log(response);
-                console.log(response.headers.authorization);
-                const authCookie = "auth=" + response.headers.authorization;
-                document.cookie = authCookie;
-                alert("You are logged in!");
-                this.props.history.push("/");
-              }
+          console.log("FETCH")
+          var username = document.getElementById("quizme-login-username").value;
+          var password = document.getElementById("quizme-login-password").value;
+          fetch("http://localhost:2020/users/login", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              userName: username,
+              password: password
             })
-            .catch(err => {
-              console.error(err);
-              alert("Error logging in please try again");
-            });
+          }).then(response => response.text().then(text => {cookies.set("jwt", text); window.location.pathname = "/highscores";}))
         };
+
         render() {
           return (
-            <div style={{ fontFamily: "optima" }} className="m-4">
-              <h3>Login</h3>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <label>Username: </label>
-                  <input
-                    type="text"
-                    name="username"
-                    required
-                    className="form-control"
-                    value={this.state.username}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Password:</label>
-                  <input
-                    type="password"
-                    name="password"
-                    required
-                    className="form-control"
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <input type="submit" value="Login" className="nes-btn is-primary quizme-login-button" />
-                </div>
-              </form>
+            <div id="quizme-login-container">
+              <span id="quizme-home-quizme">
+                <span style={{color: this.state.colors[5]}}>Q</span>
+                <span style={{color: this.state.colors[4]}}>u</span>
+                <span style={{color: this.state.colors[3]}}>i</span>
+                <span style={{color: this.state.colors[2]}}>z</span>
+                <span style={{color: this.state.colors[1]}}>M</span>
+                <span style={{color: this.state.colors[0]}}>e</span>!
+              </span>
+              <input
+                id="quizme-login-username"
+                type="text"
+                name="username"
+                required
+                className="nes-input"
+                onChange={this.handleInputChange}
+              />
+              <input
+                id="quizme-login-password"
+                type="password"
+                name="password"
+                required
+                className="nes-input"
+                onChange={this.handleInputChange}
+              />
+              <input type="button" id="quizme-login-button" value="Login" className="nes-btn is-primary quizme-login-button" onClick={this.onSubmit}/>
             </div>
           );
         }

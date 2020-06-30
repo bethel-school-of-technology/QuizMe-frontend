@@ -1,15 +1,22 @@
-#quizme-home-container {
+#quizme-login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 #quizme-login-quizme {
     font-size: 10vw;
 }
 
-.quizme-login-button {
-    font-size: 5vw;
+#quizme-login-button {
+    font-size: 2vw;
+    width: 20vw;
+    margin-top: 2vw;
+}
+
+#quizme-login-container .nes-input {
+    font-size: 2vw;
     width: 40vw;
     margin-top: 2vw;
 }
@@ -20,7 +27,12 @@
     }
     
     .quizme-login-button {
-        font-size: 5vh;
+        font-size: 2vh;
+        width: 20vh;
+        margin-top: 2vh;
+    }
+    #quizme-login-container .nes-input {
+        font-size: 2vh;
         width: 40vh;
         margin-top: 2vh;
     }

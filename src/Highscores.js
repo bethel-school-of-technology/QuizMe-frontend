@@ -2,6 +2,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import './Highscores.css';
+import Cookies from 'universal-cookie';
+import check from './check.svg'
+const cookies = new Cookies();
 
 class Highscores extends Component {
     constructor() {
@@ -12,7 +15,6 @@ class Highscores extends Component {
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
         this.postScore = this.postScore.bind(this);
-
     }
 
     postScore (url = "http://localhost:2020/highscores/") {
@@ -33,6 +35,21 @@ class Highscores extends Component {
         }).then(() => this.fetchScoreData(this.props.category || ""))
         .catch(() => this.setState({posted: false}));
     };
+
+    changeScore(id) {
+        var name = document.getElementById("quizme-highscores-score"+id+"-name");
+        var score = document.getElementById("quizme-highscores-score"+id+"-score")
+        console.log(`http://localhost:2020/highscores/${id}`)
+        fetch(`http://localhost:2020/highscores/${id}`, {
+            method: "PUT",
+            body: {
+                playername: name,
+                highscore: score
+            },
+            credentials: 'include',
+            mode: "cors"
+        })
+    }
     
     fetchScoreData = (category) => {
         return fetch(`http://localhost:2020/highscores/${category}`).then(data => data.json()).then(response => {
@@ -48,7 +65,7 @@ class Highscores extends Component {
         if (!this.state.scoreData) this.fetchScoreData(this.props.category || "");
         return ([
             this.state.scoreData ? 
-                (<div id="quizme-highscores-container" className="nes-container is-dark">
+                (<div key="0" id="quizme-highscores-container" className="nes-container is-dark">
                     <h1 style={{textAlign: "center"}}>High Scores</h1>
                         {
                             this.props.category === undefined || this.state.posted? 
@@ -93,10 +110,19 @@ class Highscores extends Component {
                             </tr>
                             {
                                 this.state.scoreData.map((highscores, index) => (
-                                    <tr key={index}> 
-                                        <td>{highscores.playername}</td>
-                                        <td style={{textAlign: "right"}}>{highscores.highscore}</td>
-                                    </tr>
+                                    cookies.get("jwt") ?
+                                        <tr key={index}>
+                                            <td><input id={"quizme-highscores-score"+highscores.id+"-name"} type="text" className="nes-input" placeholder={highscores.playername}/></td>
+                                            <td style={{textAlign: "right"}}>
+                                                <input id={"quizme-highscores-score"+highscores.id+"-score"} type="number" className="nes-input" defaultValue={highscores.highscore}/>
+                                            </td>
+                                            <td><img className="send" src={check} onClick={() => this.changeScore(highscores.id)}/></td>
+                                        </tr> 
+                                        :
+                                        <tr key={index}> 
+                                            <td>{highscores.playername}</td>
+                                            <td style={{textAlign: "right"}}>{highscores.highscore}</td>
+                                        </tr>
                                 ))
                             }
                             {
@@ -114,8 +140,8 @@ class Highscores extends Component {
                     
                 </div>) 
                 :
-                <div>Fetching score data...</div>,
-                <footer id="quizme-highscores-footer">
+                <div key="0">Fetching score data...</div>,
+                <footer key="1" id="quizme-highscores-footer">
                     <Link to="/" className="nes-btn is-primary">Home</Link>
                     <Link to="/SelectCategory" className="nes-btn is-secondary">Play Again!</Link>
                 </footer>
