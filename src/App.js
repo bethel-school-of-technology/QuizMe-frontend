@@ -4,6 +4,7 @@ import Quiz from './Quiz';
 import SelectCategory from './SelectCategory';
 import Home from "./Home";
 import Login from "./Login";
+import Logout from "./Logout";
 import Highscores from "./Highscores"
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Switch>
           <Route path="/" component={Home} exact/>
           <Route path="/Login" component={Login} exact/>
+          <Route path="/Logout" component={Logout} exact/>
           <Route path="/Highscores" component={Highscores} exact/>
           <Route path="/SelectCategory" component={SelectCategory}/>
           <Route path="/Quiz/:category" render={(props) => {

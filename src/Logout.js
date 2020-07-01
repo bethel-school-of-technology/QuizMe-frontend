@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class Logout extends Component {
-    componentDidMount() {
-      document.cookie = "auth=";
-      fetch.get("/users/logout").then(res => console.log(res));
-  }
   render() {
+    cookies.remove("jwt");
     return (
       <div style={{ fontFamily: "optima" }} className="m-4">
         <h3>You Are Now Logged Out</h3>
