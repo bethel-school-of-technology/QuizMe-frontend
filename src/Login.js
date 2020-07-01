@@ -19,6 +19,9 @@ class Login extends Component {
             ]
           };
         }
+
+        cycling = false;
+
         handleInputChange = event => {
           const { value, name } = event.target;
           this.setState({
@@ -44,6 +47,7 @@ class Login extends Component {
         };
 
         render() {
+          if(!this.cycling) {this.cycleColors(); this.cycling = true}
           return (
             <div id="quizme-login-container">
               <span id="quizme-home-quizme">
@@ -73,7 +77,17 @@ class Login extends Component {
               <input type="button" id="quizme-login-button" value="Login" className="nes-btn is-primary quizme-login-button" onClick={this.onSubmit}/>
             </div>
           );
+        }cycleColors() {
+          setInterval(() => {
+            var newColors = ["","","","","",""];
+            this.state.colors.forEach((color, index) => {
+              var x = index === 5 ? 0 : index+1;
+              newColors[index] = this.state.colors[x];
+            });
+            this.setState({colors: newColors})
+          }, 1000)
         }
       }
+      
       
 export default Login;
