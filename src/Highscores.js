@@ -15,6 +15,8 @@ class Highscores extends Component {
         };
         this.fetchScoreData = this.fetchScoreData.bind(this);
         this.postScore = this.postScore.bind(this);
+        this.mounted = false;
+
     }
 
     postScore (url = "http://localhost:2020/highscores/") {
@@ -37,15 +39,19 @@ class Highscores extends Component {
     };
 
     changeScore(id) {
-        var name = document.getElementById("quizme-highscores-score"+id+"-name");
-        var score = document.getElementById("quizme-highscores-score"+id+"-score")
-        console.log(`http://localhost:2020/highscores/${id}`)
+        var name = document.getElementById("quizme-highscores-score"+id+"-name").value || 
+            document.getElementById("quizme-highscores-score"+id+"-name").placeholder;
+        var score = document.getElementById("quizme-highscores-score"+id+"-score").value;
         fetch(`http://localhost:2020/highscores/${id}`, {
             method: "PUT",
-            body: {
-                playername: name,
+            body: JSON.stringify({
+                playerName: name,
                 highscore: score
-            },
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
             credentials: 'include',
             mode: "cors"
         })
@@ -60,7 +66,6 @@ class Highscores extends Component {
             );
         })
     };
-
     render() {
         if (!this.state.scoreData) this.fetchScoreData(this.props.category || "");
         return ([
@@ -116,7 +121,7 @@ class Highscores extends Component {
                                             <td style={{textAlign: "right"}}>
                                                 <input id={"quizme-highscores-score"+highscores.id+"-score"} type="number" className="nes-input" defaultValue={highscores.highscore}/>
                                             </td>
-                                            <td><img className="send" src={check} onClick={() => this.changeScore(highscores.id)}/></td>
+                                            <td><img className="send" alt="Change score" src={check} onClick={() => this.changeScore(highscores.id)}/></td>
                                         </tr> 
                                         :
                                         <tr key={index}> 
