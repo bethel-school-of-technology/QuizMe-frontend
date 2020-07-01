@@ -17,7 +17,11 @@ class Logout extends Component {
       ]
     };
   }
+
+  cycling = false;
+
   render() {
+    if(!this.cycling) {this.cycleColors(); this.cycling = true}
     cookies.remove("jwt");
     return (
       <div id="quizme-login-container">
@@ -36,6 +40,18 @@ class Logout extends Component {
       </div>
     );
   }
+
+  cycleColors() {
+    setInterval(() => {
+      var newColors = ["","","","","",""];
+      this.state.colors.forEach((color, index) => {
+        var x = index === 5 ? 0 : index+1;
+        newColors[index] = this.state.colors[x];
+      });
+      this.setState({colors: newColors})
+    }, 1000)
+  }
 }
+
 
 export default Logout
