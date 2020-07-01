@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import './Logout.css';
 const cookies = new Cookies();
 
 class Logout extends Component {
@@ -25,17 +26,17 @@ class Logout extends Component {
     cookies.remove("jwt");
     return (
       <div id="quizme-login-container">
-              <span id="quizme-home-quizme">
-                <span style={{color: this.state.colors[5]}}>Q</span>
-                <span style={{color: this.state.colors[4]}}>u</span>
-                <span style={{color: this.state.colors[3]}}>i</span>
-                <span style={{color: this.state.colors[2]}}>z</span>
-                <span style={{color: this.state.colors[1]}}>M</span>
-                <span style={{color: this.state.colors[0]}}>e</span>!
-              </span>
-        <h3>You Are Now Logged Out</h3>
-        <Link to="/Login" className="nes-btn is-primary quizme-logout-button ">
-          Log Back In!
+        <span id="quizme-home-quizme">
+          <span style={{color: this.state.colors[5]}}>Q</span>
+          <span style={{color: this.state.colors[4]}}>u</span>
+          <span style={{color: this.state.colors[3]}}>i</span>
+          <span style={{color: this.state.colors[2]}}>z</span>
+          <span style={{color: this.state.colors[1]}}>M</span>
+          <span style={{color: this.state.colors[0]}}>e</span>!
+        </span>
+        <h3 style={{textAlign: "center"}}>You Are Now Logged Out</h3>
+        <Link to="/" className="nes-btn is-primary">
+          Home
         </Link>
       </div>
     );
