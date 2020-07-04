@@ -21,7 +21,7 @@ class Home extends Component {
       if(!this.cycling) {this.cycleColors(); this.cycling = true}
       return ( 
       <div id="quizme-home-container">
-              <span id="quizme-home-quizme" style={{fontSize: '7em'}}>
+              <span id="quizme-home-quizme">
                 <span style={{color: this.state.colors[5], paddingLeft: '.5em'}}>Q</span>
                 <span style={{color: this.state.colors[4]}}>u</span>
                 <span style={{color: this.state.colors[3]}}>i</span>
@@ -30,7 +30,7 @@ class Home extends Component {
                 <span style={{color: this.state.colors[0]}}>e</span>
                 <span style={{color: this.state.colors[5]}}>!</span>
               </span>
-              <Quip/>
+              <Quip id="quip"/>
               <Link to="/SelectCategory" className="nes-btn is-primary quizme-home-button">Play</Link>
               <Link to="/Highscores" className="nes-btn is-primary quizme-home-button">Scores</Link>
       </div>)

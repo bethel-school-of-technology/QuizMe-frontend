@@ -19,7 +19,7 @@ class Quip extends Component {
     render () {
         const {data} = this.state;
         return(
-            <p>{data.quip}</p>
+            <p style={{Color: "#c4c4c4"}}>{data.quip}</p>
         )
     }
 

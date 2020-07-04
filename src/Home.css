@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 #quizme-home-quizme {
-    font-size: 10vw;
+    font-size: 7em;
 }
 
 .quizme-home-button {
@@ -16,12 +17,16 @@
 
 @media screen and (min-aspect-ratio: 1/1) {
     #quizme-home-quizme {
-        font-size: 10vh;
+        font-size: 15vh;
     }
     
     .quizme-home-button {
-        font-size: 5vh;
-        width: 40vh;
+        font-size: 2vw;
+        width: 20vw;
         margin-top: 2vh;
+    }
+
+    #quip {
+        width: 40vw
     }
 }
