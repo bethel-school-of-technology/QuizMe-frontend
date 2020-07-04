@@ -6,10 +6,12 @@ import Home from "./Home";
 import Login from "./Login";
 import Logout from "./Logout";
 import Highscores from "./Highscores"
+import MusicButton from './MusicButton';
 
 function App() {
   return (
       <Router>
+        <MusicButton/>
         <Switch>
           <Route path="/" component={Home} exact/>
           <Route path="/Login" component={Login} exact/>

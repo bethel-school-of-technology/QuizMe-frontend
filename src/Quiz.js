@@ -11,6 +11,7 @@ class Quiz extends Component {
     timeBonus = 5;
     timePenalty = 3;
     category = "";
+    
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
