@@ -31,7 +31,7 @@ class Home extends Component {
                 <span style={{color: this.state.colors[5]}}>!</span>
               </span>
               <Quip id="quip"/>
-              <Link to="/SelectCategory" className="nes-btn is-primary quizme-home-button">Play</Link>
+              <Link to="/SelectCategory" className="nes-btn is-primary quizme-home-button" style={{marginTop: "8vh"}}>Play</Link>
               <Link to="/Highscores" className="nes-btn is-primary quizme-home-button">Scores</Link>
       </div>)
   }
