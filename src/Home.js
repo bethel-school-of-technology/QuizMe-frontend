@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import './Home.css';
- 
+import Quip from "./Quip" ;
+
 class Home extends Component {
   state = {
     colors: [
@@ -12,7 +13,7 @@ class Home extends Component {
       "#0F0",
       "#F0F"
     ]
-  }
+  };
 
   cycling = false;
 
@@ -21,13 +22,15 @@ class Home extends Component {
       return ( 
       <div id="quizme-home-container">
               <span id="quizme-home-quizme">
-                <span style={{color: this.state.colors[5]}}>Q</span>
+                <span style={{color: this.state.colors[5], paddingLeft: '.5em'}}>Q</span>
                 <span style={{color: this.state.colors[4]}}>u</span>
                 <span style={{color: this.state.colors[3]}}>i</span>
                 <span style={{color: this.state.colors[2]}}>z</span>
                 <span style={{color: this.state.colors[1]}}>M</span>
-                <span style={{color: this.state.colors[0]}}>e</span>!
+                <span style={{color: this.state.colors[0]}}>e</span>
+                <span style={{color: this.state.colors[5]}}>!</span>
               </span>
+              <Quip id="quip"/>
               <Link to="/SelectCategory" className="nes-btn is-primary quizme-home-button">Play</Link>
               <Link to="/Highscores" className="nes-btn is-primary quizme-home-button">Scores</Link>
       </div>)
