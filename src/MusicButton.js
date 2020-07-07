@@ -2,7 +2,7 @@ import React from 'react';
 import MusicOn from './audiotrack.svg'
 
 export default class MusicButton extends React.Component {
-    url = 'http://www/8-Bit-Surf.mp3';
+    url = '8-Bit-Surf.mp3';
     
     ctx = new window.AudioContext();
     buffer;
