@@ -17,6 +17,7 @@ class Quiz extends Component {
     timeBonus = 5;
     timePenalty = 3;
     category = "";
+    // rendered = false ;
     
     constructor() {
         super();
@@ -34,6 +35,11 @@ class Quiz extends Component {
 
     render() {
         
+        // if (!this.rendered) {
+        //     this.rendered = true ;
+        //     this.getAllQuestions()
+        // };
+
         if(!(this.category && this.props.match.params)) {this.category =  parseInt(this.props.match.params.category) || ""}
         var answers = [];
         this.state.answers.forEach((answer, index) =>
@@ -62,8 +68,8 @@ class Quiz extends Component {
     }
 
     componentDidMount() {
-        fetch("https://opentdb.com/api_token.php?command=request").then(data => data.json()).then(data => { this.sessionToken = data.token })
-            .then(this.getQuestion()).then(this.startTimer());
+        this.getAllQuestions()
+        .then(this.startTimer());
     }
 
     getAllQuestions() {
@@ -78,6 +84,7 @@ class Quiz extends Component {
             }
 
             if (data.response_code !== 0) { this.setState({ gameOver: true }); return }
+            
             var correctAnswer = data.results[0].correct_answer;
             var incorrectAnswers = data.results[0].incorrect_answers;
             var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });

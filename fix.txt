@@ -1,0 +1,38 @@
+ componentDidMount() {
+        this.getAllQuestions()
+        .then(this.startTimer());
+    }
+
+
+    getAllQuestions() {
+        let category = this.props.match.params.category ? `&category=${this.props.match.params.category}` : ''
+        return fetch(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=10${category}`)
+        .then(data => data.json())
+        .then(data => {
+
+            let tempArray = []
+            for (var i = 0; i < data.results.length; i++) {
+                tempArray.push(data.results[i])  
+            }
+
+            if (data.response_code !== 0) { this.setState({ gameOver: true }); return }
+            
+            var correctAnswer = data.results[0].correct_answer;
+            var incorrectAnswers = data.results[0].incorrect_answers;
+            var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });
+            answers.forEach((element, index) => {
+                answers[index] = this.htmlDecode(answers[index]);
+                correctAnswer = (correctAnswer === element) ? index : correctAnswer;
+            });
+
+            this.setState({ 
+                questionText: this.htmlDecode(data.results[0].question), 
+                answers: answers, 
+                correctAnswer: correctAnswer 
+            })
+
+
+            console.log(this.state);
+            console.log(this.questionInfo);
+        });
+    }
