@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './Quiz.css';
 import Highscores from "./Highscores";
+import questions from './questions.json';
 
 class Quiz extends Component {
     timerMax = 60;
