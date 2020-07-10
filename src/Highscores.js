@@ -77,7 +77,6 @@ class Highscores extends Component {
                             <div className="nes-select">
                                 <select id="category" onChange={e => this.fetchScoreData(e.target.options[e.target.selectedIndex].value)}>
                                     <option value="">All Categories</option>
-                                    <option value="0">Any Category</option>
                                     <option value="9">General Knowledge</option>
                                     <option value="10">Entertainment: Books</option>
                                     <option value="11">Entertainment: Film</option>
