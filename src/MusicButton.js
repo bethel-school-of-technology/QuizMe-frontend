@@ -69,7 +69,7 @@ export default class MusicButton extends React.Component {
     render() {
         return (
             <div id="toggle" onClick={() => this.onClick()} style={{width: "20px", height: "20px", position: "absolute", top: 40}} className="is-primary">
-                <img src={MusicOn}/>
+                <img src={MusicOn} alt='mute'/>
             </div>)
     }
 

@@ -23,23 +23,23 @@ class Quiz extends Component {
         this.nextQuestion = this.nextQuestion.bind(this);
     }
 
-    
+
 
     render() {
-        
-        if(!(this.category && this.props.match.params)) {this.category =  parseInt(this.props.match.params.category) || ""}
+
+        if (!(this.category && this.props.match.params)) { this.category = parseInt(this.props.match.params.category) || "" }
         var answers = [];
         this.state.answers.forEach((answer, index) =>
-        answers.push(<div key={index} className="nes-btn is-primary answer"
-        onClick={() => this.nextQuestion(index)}>{answer}</div>))
+            answers.push(<div key={index} className="nes-btn is-primary answer"
+                onClick={() => this.nextQuestion(index)}>{answer}</div>))
         if (this.state.gameOver) {
-            
+
             return (
-                <Highscores category={this.category} correctAnswers={this.correctAnswers}/>
+                <Highscores category={this.category} correctAnswers={this.correctAnswers} />
             )
 
         }
-       
+
         return (
             <div id='quizme-quiz-container' className="nes-container is-dark">
                 <div id="quizme-quiz-question" className="nes-container is-dark with-title">
@@ -54,21 +54,18 @@ class Quiz extends Component {
         )
     }
     componentDidMount() {
-        this.getAllQuestions();
-        console.log(this.allQuestions)
-        this.shuffle(this.allQuestions);
-        console.log(this.allQuestions)
-
+        this.getAllQuestions(); 
+        this.shuffle(this.allQuestions); 
         this.getQuestion();
         this.startTimer();
     }
     getAllQuestions() {
         this.allQuestions = questions.categories[this.props.match.params.category];
-        
+
     }
     getQuestion() {
         let category = this.props.match.params.category;
-        if (this.question == this.allQuestions.length) { this.setState({ gameOver: true }); return }
+        if (this.question === this.allQuestions.length) { this.setState({ gameOver: true }); return }
         var correctAnswer = questions.categories[category][this.question].correct_answer;
         var incorrectAnswers = questions.categories[category][this.question].incorrect_answers;
         var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });
@@ -83,11 +80,16 @@ class Quiz extends Component {
         var correct = index === this.state.correctAnswer;
         if (correct) {
             this.setState({ timerValue: this.state.timerValue > this.timerMax - 5 ? this.timerMax : this.state.timerValue + this.timeBonus })
+            this.question++;
+            this.getQuestion();
             this.correctAnswers++;
-        } else this.setState({ timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0 })
-        this.getQuestion()
-        this.question++;
-        var timer = document.getElementById('timer');
+        } else {
+            this.setState(
+                { timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0 });
+            this.question++;
+            this.getQuestion();
+
+            var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         setTimeout(() => {
             timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
@@ -98,6 +100,7 @@ class Quiz extends Component {
         setTimeout(() => {
             timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
         }, 600)
+        }
     }
     htmlDecode(input) {
         var e = document.createElement('div');
