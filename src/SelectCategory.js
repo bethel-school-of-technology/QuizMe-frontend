@@ -3,7 +3,7 @@ import './SelectCategory.css'
 import {Link} from 'react-router-dom';
 
 class SelectCategory extends React.Component {
-    state = {category: ""}
+    state = {category: "9"}
     setCategory(e) {
         this.setState({category: e.target.options[e.target.selectedIndex].value})
     }
@@ -16,8 +16,7 @@ class SelectCategory extends React.Component {
             <div id="quizme-select-category-container" className="nes-container is-dark">
                 <h1 id="quizme-select-category-h1">Categories</h1>
                 <div className="nes-select">
-                    <select id="quizme-select-category-select" onChange={this.setCategory}>
-                        <option>Any Category</option>
+                    <select id="quizme-select-category-select" onBlur={this.setCategory}>
                         <option value="9">General Knowledge</option>
                         <option value="10">Entertainment: Books</option>
                         <option value="11">Entertainment: Film</option>
