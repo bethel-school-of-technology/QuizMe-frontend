@@ -2,17 +2,21 @@ import React, { Component } from "react";
 import './Quiz.css';
 import Highscores from "./Highscores";
 import questions from './questions.json';
-
 class Quiz extends Component {
     timerMax = 60;
     state = { questionText: "Loading screens are fun!", answers: [], correctAnswer: 0, timerValue: this.timerMax, gameOver: false };
-    question = 1;
+    question = 0;
     correctAnswers = 0;
     sessionToken;
     timeBonus = 5;
     timePenalty = 3;
     category = "";
-    
+    allQuestions = [];
+
+    shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+    }
+
     constructor() {
         super();
         this.getQuestion = this.getQuestion.bind(this);
@@ -39,7 +43,7 @@ class Quiz extends Component {
         return (
             <div id='quizme-quiz-container' className="nes-container is-dark">
                 <div id="quizme-quiz-question" className="nes-container is-dark with-title">
-                    <p id="quizme-quiz-question-number" className="title">Question {this.question}</p>
+                    <p id="quizme-quiz-question-number" className="title">Question {this.question + 1}</p>
                     <p>{this.state.questionText}</p>
                 </div>
                 <div id="quizme-quiz-answers">
@@ -50,22 +54,29 @@ class Quiz extends Component {
         )
     }
     componentDidMount() {
-        fetch("https://opentdb.com/api_token.php?command=request").then(data => data.json()).then(data => { this.sessionToken = data.token })
-            .then(() => { this.getQuestion().then(() => this.startTimer()) });
+        this.getAllQuestions();
+        console.log(this.allQuestions)
+        this.shuffle(this.allQuestions);
+        console.log(this.allQuestions)
+
+        this.getQuestion();
+        this.startTimer();
+    }
+    getAllQuestions() {
+        this.allQuestions = questions.categories[this.props.match.params.category];
+        
     }
     getQuestion() {
-        let category = this.props.match.params.category ? `&category=${this.props.match.params.category}` : ''
-        return fetch(`https://opentdb.com/api.php?token=${this.sessionToken}&amount=1${category}`).then(data => data.json()).then(data => {
-            if (data.response_code !== 0) { this.setState({ gameOver: true }); return }
-            var correctAnswer = data.results[0].correct_answer;
-            var incorrectAnswers = data.results[0].incorrect_answers;
-            var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });
-            answers.forEach((element, index) => {
-                answers[index] = this.htmlDecode(answers[index]);
-                correctAnswer = (correctAnswer === element) ? index : correctAnswer;
-            });
-            this.setState({ questionText: this.htmlDecode(data.results[0].question), answers: answers, correctAnswer: correctAnswer })
-        })
+        let category = this.props.match.params.category;
+        if (this.question == this.allQuestions.length) { this.setState({ gameOver: true }); return }
+        var correctAnswer = questions.categories[category][this.question].correct_answer;
+        var incorrectAnswers = questions.categories[category][this.question].incorrect_answers;
+        var answers = [...incorrectAnswers, correctAnswer].sort(() => { return 0.5 - Math.random() });
+        answers.forEach((element, index) => {
+            answers[index] = this.htmlDecode(answers[index]);
+            correctAnswer = (correctAnswer === element) ? index : correctAnswer;
+        });
+        this.setState({ questionText: this.htmlDecode(questions.categories[category][this.question].question), answers: answers, correctAnswer: correctAnswer })
     }
     nextQuestion(index) {
         if (this.state.gameOver) return;
@@ -74,7 +85,8 @@ class Quiz extends Component {
             this.setState({ timerValue: this.state.timerValue > this.timerMax - 5 ? this.timerMax : this.state.timerValue + this.timeBonus })
             this.correctAnswers++;
         } else this.setState({ timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0 })
-        this.getQuestion().then(this.question++);
+        this.getQuestion()
+        this.question++;
         var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         setTimeout(() => {
