@@ -88,19 +88,18 @@ class Quiz extends Component {
                 { timerValue: this.state.timerValue > this.timePenalty ? this.state.timerValue - this.timePenalty : 0 });
             this.question++;
             this.getQuestion();
-
-            var timer = document.getElementById('timer');
+        }
+        var timer = document.getElementById('timer');
         timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
         setTimeout(() => {
             timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
-        }, 200)
+        }, 300)
         setTimeout(() => {
             timer.classList.replace('is-primary', correct ? 'is-success' : 'is-error');
-        }, 400)
+        }, 600)
         setTimeout(() => {
             timer.classList.replace(correct ? 'is-success' : 'is-error', 'is-primary');
-        }, 600)
-        }
+        }, 900)
     }
     htmlDecode(input) {
         var e = document.createElement('div');
