@@ -133,8 +133,8 @@ class Highscores extends Component {
                                 (this.state.posted || this.props.category === undefined) ? 
                                     <></> : 
                                     <tr id="quizme-highscores-input">
-                                        <td><input id="nameInput" placeholder="Player Name" className="nes-input is-dark"/></td>
-                                        <td style={{textAlign: "right"}}><button className="nes-btn is-primary" onClick={() => this.postScore()} >Confirm</button></td>
+                                        <td><input id="nameInput" placeholder="Player Name" className="nes-input is-dark" onKeyDown={e => {if(e.keyCode === 13) this.postScore();}}/></td>
+                                        <td align="right">{this.props.correctAnswers * 100}</td>
                                     </tr>
                             }
                             
