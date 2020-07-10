@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom';
+import {Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Quiz from './Quiz';
 import SelectCategory from './SelectCategory';
 import Home from "./Home";
@@ -17,13 +17,11 @@ function App() {
           <Route path="/Login" component={Login} exact/>
           <Route path="/Logout" component={Logout} exact/>
           <Route path="/Highscores" component={Highscores} exact/>
-          <Route path="/SelectCategory" component={SelectCategory}/>
+          <Route path="/SelectCategory" component={SelectCategory} exact/>
           <Route path="/Quiz/:category" render={(props) => {
             return <Quiz {...props}/>
           }}></Route>
-          <Route path="/Quiz/" render={(props) => {
-            return <Quiz {...props}/>
-          }} exact></Route>
+          <Route render={() => <Redirect to="/"/>}/>
         </Switch>
       </Router>
   );
