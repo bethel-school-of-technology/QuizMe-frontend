@@ -1,0 +1,21 @@
+#quizme-music-button {
+    position: absolute;
+    top: 1vw;
+}
+
+#quizme-music-button img {
+    width: 4vw;
+    height: 4vw;
+}
+
+@media screen and (min-aspect-ratio: 1/1) {
+    #quizme-music-button {
+        position: absolute;
+        top: 1vw;
+    }
+    
+    #quizme-music-button img {
+        width: 4vw;
+        height: 4vw;
+    }
+}

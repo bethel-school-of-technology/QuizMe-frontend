@@ -1,5 +1,6 @@
 import React from 'react';
 import MusicOn from './audiotrack.svg'
+import './MusicButton.css'
 
 export default class MusicButton extends React.Component {
     url = '/8-Bit-Surf.mp3';
@@ -68,8 +69,8 @@ export default class MusicButton extends React.Component {
 
     render() {
         return (
-            <div id="toggle" onClick={() => this.onClick()} style={{width: "20px", height: "20px", position: "absolute", top: 40}} className="is-primary">
-                <img src={MusicOn} alt='mute'/>
+            <div id="quizme-music-button" onClick={() => this.onClick()} className="is-primary">
+                <img src={MusicOn} alt='Toggle music'/>
             </div>)
     }
 
