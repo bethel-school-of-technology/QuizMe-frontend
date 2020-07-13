@@ -43,7 +43,12 @@ class Login extends Component {
               userName: username,
               password: password
             })
-          }).then(response => response.text().then(text => {cookies.set("jwt", text); window.location.pathname = "/highscores";}))
+          }).then(response => response.text().then(text => {
+            if(text !== 'null') {
+              cookies.set("jwt", text);
+              window.location.pathname = "/highscores";
+            }
+          }))
         };
 
         render() {

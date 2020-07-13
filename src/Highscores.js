@@ -45,7 +45,7 @@ class Highscores extends Component {
         fetch(`http://localhost:2020/highscores/${id}`, {
             method: "PUT",
             body: JSON.stringify({
-                playerName: name,
+                playername: name,
                 highscore: score
             }),
             headers: {
@@ -55,6 +55,7 @@ class Highscores extends Component {
             credentials: 'include',
             mode: "cors"
         })
+        .then(() => window.location.reload())
     }
     
     fetchScoreData = (category) => {
@@ -116,7 +117,7 @@ class Highscores extends Component {
                                 this.state.scoreData.map((highscores, index) => (
                                     cookies.get("jwt") ?
                                         <tr key={index}>
-                                            <td><input id={"quizme-highscores-score"+highscores.id+"-name"} type="text" className="nes-input" placeholder={highscores.playername}/></td>
+                                            <td><input id={"quizme-highscores-score"+highscores.id+"-name"} type="text" className="nes-input" defaultValue={highscores.playername}/></td>
                                             <td style={{textAlign: "right"}}>
                                                 <input id={"quizme-highscores-score"+highscores.id+"-score"} type="number" className="nes-input" defaultValue={highscores.highscore}/>
                                             </td>
