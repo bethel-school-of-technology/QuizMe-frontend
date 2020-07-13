@@ -6,7 +6,7 @@
 }
 
 #quizme-home-quizme {
-    font-size: 7em;
+    font-size: 14vw;
 }
 
 .quizme-home-button {
@@ -17,7 +17,7 @@
 
 @media screen and (min-aspect-ratio: 1/1) {
     #quizme-home-quizme {
-        font-size: 15vh;
+        font-size: 14vh;
     }
     
     .quizme-home-button {

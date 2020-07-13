@@ -27,7 +27,7 @@ class Logout extends Component {
     return (
       <div id="quizme-login-container">
         <span id="quizme-home-quizme">
-          <span style={{color: this.state.colors[5]}}>Q</span>
+          <span style={{color: this.state.colors[5], paddingLeft: '.5em'}}>Q</span>
           <span style={{color: this.state.colors[4]}}>u</span>
           <span style={{color: this.state.colors[3]}}>i</span>
           <span style={{color: this.state.colors[2]}}>z</span>

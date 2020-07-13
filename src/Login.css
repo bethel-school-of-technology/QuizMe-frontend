@@ -6,7 +6,7 @@
 }
 
 #quizme-login-quizme {
-    font-size: 10vw;
+    font-size: 14vq;
 }
 
 #quizme-login-button {
@@ -23,7 +23,7 @@
 
 @media screen and (min-aspect-ratio: 1/1) {
     #quizme-login-quizme {
-        font-size: 10vh;
+        font-size: 14vh;
     }
     
     .quizme-login-button {
